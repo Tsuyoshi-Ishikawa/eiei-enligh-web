@@ -1,4 +1,4 @@
-export interface Comment {
-  isUser: boolean;
-  text: string;
+export interface Chat {
+  userComment: string;
+  aiComment: string;
 }

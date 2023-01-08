@@ -1,8 +1,8 @@
-import { Comment } from "@/types/store";
+import { Chat } from "@/types/store";
 
 // todo: use backend DB
-export const commentHistory: Comment[] = [];
+export const chatHistory: Chat[] = [];
 
-export const setComment = (comment: Comment) => {
-  commentHistory.push(comment);
+export const setChat = (chat: Chat) => {
+  chatHistory.push(chat);
 };

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Button } from '@/components/atoms';
-import { LoadingModal, ErrorModal } from '@/components/organisms';
+import { LoadingModal, ErrorModal, Chat } from '@/components/organisms';
 import { usePostChatGpt } from '@/hooks';
-import { handleError, setComment, speak, commentHistory } from '@/utils';
+import { handleError, setChat, speak, chatHistory } from '@/utils';
 
 export default function Home() {
   const [errMessage, setErrMessage] = useState('');
@@ -41,19 +41,16 @@ export default function Home() {
   };
   const askChatGpt = async () => {
     try {
+      // const res = await postChatGpt({ prompt: 'Hi! Nice to meet you.' }); 
       SpeechRecognition.stopListening();
       if (!transcript) throw new Error('You have to talk at least one phrase.');
       const res = await postChatGpt({ prompt: transcript }); // todo: use graphql
       const answer = res.answer as string;
       if (!answer) throw new Error('Sorry. Chat Answer is empty.');
       speak(answer);
-      setComment({
-        isUser: true,
-        text: transcript,
-      });
-      setComment({
-        isUser: false,
-        text: answer,
+      setChat({
+        userComment: transcript,
+        aiComment: answer
       });
     } catch (e) {
       handleError(e, setErrMessage)
@@ -77,17 +74,7 @@ export default function Home() {
         </Button>
       </div>
       <div>
-        {commentHistory.map((comment, index) => {
-          if (comment.isUser) {
-            return (
-              <div key={index}>You: { comment.text}</div>
-            )
-          } else {
-            return (
-              <div key={index}>AI: { comment.text}</div>
-            )
-          }
-        })}
+        <Chat chats={chatHistory}/>
       </div>
     </>
   );
