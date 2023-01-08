@@ -1,13 +1,18 @@
-import { handleError, postChatGpt, speak } from '@/utils';
+import { speak } from '@/utils';
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Button } from '@/components/atoms';
 import { LoadingModal, ErrorModal } from '@/components/organisms';
+import { usePostChatGpt } from '@/hooks';
 
 export default function Home() {
   const [errMessage, setErrMessage] = useState('');
   const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    postChatGpt,
+    isLoading,
+    errorMessage: chatGptErrorMessage,
+  } = usePostChatGpt();
   
   const {
     transcript,
@@ -21,6 +26,13 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    if (chatGptErrorMessage) {
+      setErrMessage(chatGptErrorMessage);
+      setIsError(true);
+    }
+  }, [errMessage, chatGptErrorMessage]);
+
   const listenContinuously = () => {
     SpeechRecognition.startListening({
       continuous: true,
@@ -28,17 +40,12 @@ export default function Home() {
     });
   };
   const askChatGpt = async () => {
-    try {
-      setIsLoading(true);
-      SpeechRecognition.stopListening();
-      if (!transcript) throw new Error('You have to talk at least one phrase.');
-      const answer = await postChatGpt(transcript);
-      speak(answer);
-    } catch (e) {
-      handleError(e, setErrMessage);
-    }
+    SpeechRecognition.stopListening();
+    if (!transcript) throw new Error('You have to talk at least one phrase.');
+    const res = await postChatGpt({ prompt: transcript }); // todo: use graphql
+    const answer = res.answer as string;
+    if (answer) speak(answer);
     resetTranscript();
-    setIsLoading(false);
   };
   return (
     <div>
