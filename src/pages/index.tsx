@@ -66,7 +66,7 @@ export default function Home() {
     resetTranscript();
   };
   return (
-    <>
+    <div className='space-y-8 text-sm md:text-base lg:text-lg xl:text-xl lg:text-lg'>
       {isLoading && <LoadingModal />}
       {isError &&
         <ErrorModal
@@ -74,20 +74,22 @@ export default function Home() {
           setModalState={setIsError}
         />
       }
-      {!isSpeaking &&
-        <Image
-          src='https://media.giphy.com/media/EdqFrdeIIFdLKhAxaM/giphy.gif'
-          alt='Girl'
-          width={500} height={500}
-        />
-      }
-      {isSpeaking && <Image
-          src="https://media.giphy.com/media/WremZ4D6Th94U9zuV6/giphy.gif"
-          alt="Girl Speaking"
-          width={500} height={500}
-        />
-      }
-      <div>
+      <div className='flex justify-center items-center'>
+        {!isSpeaking &&
+          <Image
+            src='https://media.giphy.com/media/EdqFrdeIIFdLKhAxaM/giphy.gif'
+            alt='Girl'
+            width={500} height={500}
+          />
+        }
+        {isSpeaking && <Image
+            src="https://media.giphy.com/media/WremZ4D6Th94U9zuV6/giphy.gif"
+            alt="Girl Speaking"
+            width={500} height={500}
+          />
+        }
+      </div>
+      <div className='flex justify-center items-center space-x-2'>
         <Button
           handleClick={listenContinuously}
         >
@@ -102,6 +104,6 @@ export default function Home() {
       <div>
         <Chat chats={chatHistory}/>
       </div>
-    </>
+    </div>
   );
 }
