@@ -1,3 +1,4 @@
+import Image from 'next/future/image';
 import clsx from 'clsx';
 
 type Props = {
@@ -16,12 +17,12 @@ export const AIComment = (props: Props) =>  {
       "flex justify-start",
       className
     )}>
-      {/* todo: use next/image and set image */}
-      <img
-        src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+      <Image
+        src='/images/girl.png'
         className="object-cover h-8 w-8 rounded-full"
-        alt=""
-      />
+        alt='Girl'
+        width={500} height={500}
+        />
       <div
         className="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white"
       >

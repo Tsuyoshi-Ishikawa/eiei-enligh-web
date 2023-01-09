@@ -1,3 +1,4 @@
+import Image from 'next/future/image';
 import clsx from 'clsx';
 
 type Props = {
@@ -21,12 +22,12 @@ export const UserComment = (props: Props) =>  {
       >
         {text}
       </div>
-      {/* todo: use next/image and set image */}
-      <img
-        src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+      <Image
+        src='/images/account.png'
         className="object-cover h-8 w-8 rounded-full"
-        alt=""
-      />
+        alt='Girl'
+        width={500} height={500}
+        />
     </div>
   );
 };
