@@ -18,7 +18,7 @@ export const LoadingModal = (props: Props) => {
           className="fixed inset-0 w-full h-full bg-black opacity-40"
         />
         <div className="flex items-center min-h-screen px-4 py-8">
-          <div className="relative w-full max-w-4xl p-4 mx-auto bg-green-100 rounded-md shadow-lg space-y-8 text-center">
+          <div className="relative w-full max-w-4xl p-4 mx-auto bg-gray-100 rounded-md shadow-lg space-y-8 text-center">
             Loading...
           </div>
         </div>
