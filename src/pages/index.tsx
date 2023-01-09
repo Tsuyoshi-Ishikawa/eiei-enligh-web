@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/future/image';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Button } from '@/components/atoms';
-import { LoadingModal, ErrorModal, Chat, Collapse } from '@/components/organisms';
+import { LoadingModal, ErrorModal, Chat } from '@/components/organisms';
 import { usePostChatGpt } from '@/hooks';
 import { handleError, setChat, speak, chatHistory } from '@/utils';
 
@@ -102,11 +102,7 @@ export default function Home() {
         </Button>
       </div>
       <div>
-        <Collapse
-          heading='Chat History'
-        >
-          <Chat chats={chatHistory}/>
-        </Collapse>
+        <Chat chats={chatHistory}/>
       </div>
     </div>
   );
