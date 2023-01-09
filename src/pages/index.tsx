@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/future/image';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { Button } from '@/components/atoms';
 import { LoadingModal, ErrorModal, Chat } from '@/components/organisms';
@@ -8,6 +9,7 @@ import { handleError, setChat, speak, chatHistory } from '@/utils';
 export default function Home() {
   const [errMessage, setErrMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const {
     postChatGpt,
     isLoading,
@@ -47,7 +49,13 @@ export default function Home() {
       const res = await postChatGpt({ prompt: transcript }); // todo: use graphql
       const answer = res.answer as string;
       if (!answer) throw new Error('Sorry. Chat Answer is empty.');
-      speak(answer);
+
+      setIsSpeaking(true);
+      const callback = () => {
+        setIsSpeaking(false);
+      };
+
+      speak(answer, callback);
       setChat({
         userComment: transcript,
         aiComment: answer
@@ -60,7 +68,25 @@ export default function Home() {
   return (
     <>
       {isLoading && <LoadingModal />}
-      {isError && <ErrorModal errorMessage={errMessage} setModalState={setIsError} />}
+      {isError &&
+        <ErrorModal
+          errorMessage={errMessage}
+          setModalState={setIsError}
+        />
+      }
+      {!isSpeaking &&
+        <Image
+          src='https://media.giphy.com/media/EdqFrdeIIFdLKhAxaM/giphy.gif'
+          alt='Girl'
+          width={500} height={500}
+        />
+      }
+      {isSpeaking && <Image
+          src="https://media.giphy.com/media/WremZ4D6Th94U9zuV6/giphy.gif"
+          alt="Girl Speaking"
+          width={500} height={500}
+        />
+      }
       <div>
         <Button
           handleClick={listenContinuously}
