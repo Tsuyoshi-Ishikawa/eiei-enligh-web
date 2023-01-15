@@ -1,18 +1,18 @@
 import { useCallback, useState } from 'react';
 import { handleError } from '@/utils';
 
-interface ChangePasswordState {
+interface PostChatGptState {
   isLoading: boolean;
   isError: boolean;
   errorMessage: string;
 }
 
-interface postChatGptProp {
+interface PostChatGptProp {
   prompt: string;
 }
 
 export const usePostChatGpt = () => {
-  const [state, setState] = useState<ChangePasswordState>({
+  const [state, setState] = useState<PostChatGptState>({
     isLoading: false,
     isError: false,
     errorMessage: '',
@@ -22,7 +22,7 @@ export const usePostChatGpt = () => {
   const postChatGpt = useCallback(
     async ({
       prompt
-    }: postChatGptProp) => {
+    }: PostChatGptProp) => {
       setState({ isLoading: true, isError: false, errorMessage: '' });
 
       try {
