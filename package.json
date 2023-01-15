@@ -13,6 +13,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@deepgram/sdk": "^1.14.0",
     "@types/react-speech-recognition": "^3.9.0",
     "clsx": "^1.2.1",
     "husky": "^8.0.3",
