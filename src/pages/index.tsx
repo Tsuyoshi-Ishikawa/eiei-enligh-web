@@ -21,32 +21,11 @@ export default function Home() {
     resetTranscript,
   } = useSpeechRecognition();
 
-
-  // const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
-  // const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-  // const [recording, setRecording] = useState(false);
-  
-
   useEffect(() => {
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
       setErrMessage('Your browser does not support speech recognition software! Try Chrome desktop, maybe?');
       setIsError(true);
     }
-
-
-    // navigator.mediaDevices
-    //   .getUserMedia({ audio: true })
-    //   .then((stream) => {
-    //     const newRecorder = new MediaRecorder(stream);
-    //     setRecorder(newRecorder);
-    //     newRecorder.addEventListener('dataavailable', (event) => {
-    //       console.log("data dataavailable called.");
-    //       setAudioBlob(event.data);
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, []);
 
   useEffect(() => {
@@ -88,20 +67,6 @@ export default function Home() {
     resetTranscript();
   };
 
-  // const startRecording = () => {
-  //   if (recorder) {
-  //     setRecording(true);
-  //     recorder.start();
-  //   }
-  // };
-
-  // const stopRecording = () => {
-  //   if (recorder) {
-  //     setRecording(false);
-  //     recorder.stop();
-  //   }
-  // };
-
   return (
     <div className='space-y-8 text-sm md:text-base lg:text-lg xl:text-xl lg:text-lg'>
       {isLoading && <LoadingModal />}
@@ -142,46 +107,5 @@ export default function Home() {
         <Chat chats={chatHistory}/>
       </div>
     </div>
-
-    /* <div className='space-y-8 text-sm md:text-base lg:text-lg xl:text-xl lg:text-lg'>
-    {isLoading && <LoadingModal />}
-    {isError &&
-      <ErrorModal
-        errorMessage={errMessage}
-        setModalState={setIsError}
-      />
-    }
-    <div className='flex justify-center items-center'>
-      {!recording &&
-        <Image
-          src='https://media.giphy.com/media/EdqFrdeIIFdLKhAxaM/giphy.gif'
-          alt='Girl'
-          width={500} height={500}
-        />
-      }
-      {recording && <Image
-          src="https://media.giphy.com/media/WremZ4D6Th94U9zuV6/giphy.gif"
-          alt="Girl Speaking"
-          width={500} height={500}
-        />
-      }
-    </div>
-    <div className='flex justify-center items-center space-x-2'>
-      <Button
-        handleClick={startRecording}
-      >
-        Speech
-      </Button>
-      <Button
-        handleClick={stopRecording}
-      >
-        Get Response
-      </Button>
-    </div>
-    {audioBlob && <audio src={URL.createObjectURL(audioBlob)} controls />}
-    <div>
-      <Chat chats={chatHistory}/>
-    </div>
-    </div> */
   );
 }
